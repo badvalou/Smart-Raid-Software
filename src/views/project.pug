@@ -1,0 +1,279 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    title Smart-Raid Le projet
+    link(href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/lux/bootstrap.min.css", rel="stylesheet", crossorigin="anonymous")
+    meta(http-equiv='Content-Security-Policy', content="script-src 'self' 'unsafe-inline';")
+  body
+  .container
+      .page-header
+          h1#timeline Le projet
+      ul.timeline
+          li
+              .timeline-badge.danger
+                  i.glyphicon.glyphicon-check
+              .timeline-panel
+                  .timeline-heading
+                      h4.timeline-title L'idée
+                      p
+                          small.text-muted
+                              i.glyphicon.glyphicon-time
+                              |  Projet scolaire IUT Roanne R&T
+                  .timeline-body
+                      p
+                          |  Le but de ce projet est de réaliser un dispositif permettant de retransmettre des informations lors d’un rallye-raid de voiture (4L Trophy, …) à l’aide des capteur présents sur un smartphone type Android (caméra avant, arrière, gps, microphone, …).Le smartphone enverra les informations sur un serveur web qui se chargera de l’affichage et de la mise en forme. Suivant le débit de la liaison, une sélection sur les informations envoyées sera faite (position gps, texte, photos, son). Si la liaison n’est pas disponible, les informations seront mises en attente pour un envoi ultérieur.
+
+          li.timeline-inverted
+              .timeline-badge.danger
+                  i.glyphicon.glyphicon-credit-card
+              .timeline-panel
+                  .timeline-heading
+                      h4.timeline-title Mise en place / Outils
+                  .timeline-body
+                      p
+                          | choix des outils, des environnements, dimensionnement du projet, gestion des planning
+
+                      img.img-fluid(src="./images/diagram_project.png")
+                      p
+                          | Mise en place d'outils de developpement colaboratif : Git et un chat pour communiquer sur l'evolution du projet.
+                      p
+                          | Le projet est réparti en 5 sous parti :
+                      ul
+                          li REST API (JavaScript Node.JS)
+                          li Application web (JavaScript Node.js / Pug)
+                          li Application Android (Java)
+                          li Serveur MySQl + environnement (MariaBD / Debian)
+                          li Gestion du projet / Planning / Design
+          li
+              .timeline-badge.danger
+                  i.glyphicon.glyphicon-credit-card
+              .timeline-panel
+                  .timeline-heading
+                      h4.timeline-title Conception base de données
+                  .timeline-body
+                      img.img-fluid(src="./images/bdd.png")
+                      p
+                          | Création de la base de données avec les critères suivants :
+                      ul
+                          li Possibilité de faire plusieurs courses avec un compte
+                          li Utilisation d'un serveur FTP pour enregistrer les photos
+                          li Choix de ne pas garder les sons
+                          li Stockage des positions / pays / distance calculé entre deux positions
+                          li Plusieurs type de course differente
+          li.timeline-inverted
+              .timeline-badge.danger
+                  i.glyphicon.glyphicon-credit-card
+              .timeline-panel
+                  .timeline-heading
+                      h4.timeline-title Mise en place Rest API / Service
+                  .timeline-body
+                      .container
+                        table
+                            thead
+                                tr
+                                    th(scope='col') Requete
+                                    th(scope='col') Fonction
+                                    th(scope='col') Methode
+                            tbody
+                                tr
+                                    td /api/register/
+                                    td Creation d'un compte
+                                    td POST
+                                tr
+                                    td /api/login/
+                                    td Authentification d'un compte
+                                    td POST
+                                tr
+                                    td /api/list/courses/
+                                    td Liste des courses
+                                    td GET
+                                tr
+                                    td /api/insert/position/
+                                    td Ajoute une position
+                                    td POST
+                                tr
+                                    td /api/insert/course/
+                                    td Ajoute une couse a un utilisateur
+                                    td POST
+                                tr
+                                    td /api/insert/message/
+                                    td Ajoute un message a un utilisateur
+                                    td POST
+                                tr
+                                    td /api/insert/image/
+                                    td Ajoute une image
+                                    td POST multipart/form-data
+                                tr
+                                    td /api/profile/:id/all/
+                                    td Retourne un profil
+                                    td GET
+                      p
+                          | Creation d'un serveur Node.js , utilisation du module Express App pour la gestion des routes et de la connexion a la base de données.
+          li
+              .timeline-badge.danger
+                  i.glyphicon.glyphicon-floppy-disk
+              .timeline-panel
+                  .timeline-heading
+                      h4.timeline-title Création application web
+                  .timeline-body
+                      img.img-fluid(src="./images/web.png")
+                      p
+                          | Ci dessus la liste des routes du site web. Utilisation de l'interpreteur Pug (Jade) qui permet de rendre les fichiers HTML dynamique et une integration du JS.
+          li.timeline-inverted
+              .timeline-badge.danger
+                  i.glyphicon.glyphicon-thumbs-up
+              .timeline-panel
+                  .timeline-heading
+                      h4.timeline-title Application Android
+                  .timeline-body
+                      ul
+                          li Création des differents layout
+                          li Integration d'une api pour communiquer avec la Rest API
+                          li Programmation des layout en Java
+                          li Integration des outils Google pour la map et le stockage
+  style.
+      .timeline {
+          list-style: none;
+          padding: 20px 0 20px;
+          position: relative;
+      }
+
+      .timeline:before {
+          top: 0;
+          bottom: 0;
+          position: absolute;
+          content: " ";
+          width: 3px;
+          background-color: #eeeeee;
+          left: 50%;
+          margin-left: -1.5px;
+      }
+
+      .timeline > li {
+          margin-bottom: 20px;
+          position: relative;
+      }
+
+      .timeline > li:before,
+      .timeline > li:after {
+          content: " ";
+          display: table;
+      }
+
+      .timeline > li:after {
+          clear: both;
+      }
+
+      .timeline > li:before,
+      .timeline > li:after {
+          content: " ";
+          display: table;
+      }
+
+      .timeline > li:after {
+          clear: both;
+      }
+
+      .timeline > li > .timeline-panel {
+          width: 50%;
+          float: left;
+          border: 1px solid #d4d4d4;
+          border-radius: 2px;
+          padding: 20px;
+          position: relative;
+          -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+          box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+      }
+
+      .timeline > li.timeline-inverted + li:not(.timeline-inverted),
+      .timeline > li:not(.timeline-inverted) + li.timeline-inverted {
+          margin-top: -60px;
+      }
+
+      .timeline > li:not(.timeline-inverted) {
+          padding-right: 90px;
+      }
+
+      .timeline > li.timeline-inverted {
+          padding-left: 90px;
+      }
+
+      .timeline > li > .timeline-panel:before {
+          position: absolute;
+          top: 26px;
+          right: -15px;
+          display: inline-block;
+          border-top: 15px solid transparent;
+          border-left: 15px solid #ccc;
+          border-right: 0 solid #ccc;
+          border-bottom: 15px solid transparent;
+          content: " ";
+      }
+
+      .timeline > li > .timeline-panel:after {
+          position: absolute;
+          top: 27px;
+          right: -14px;
+          display: inline-block;
+          border-top: 14px solid transparent;
+          border-left: 14px solid #fff;
+          border-right: 0 solid #fff;
+          border-bottom: 14px solid transparent;
+          content: " ";
+      }
+
+      .timeline > li > .timeline-badge {
+          color: #fff;
+          width: 50px;
+          height: 50px;
+          line-height: 50px;
+          font-size: 1.4em;
+          text-align: center;
+          position: absolute;
+          top: 16px;
+          left: 50%;
+          margin-left: -25px;
+          background-color: #999999;
+          z-index: 100;
+          border-top-right-radius: 50%;
+          border-top-left-radius: 50%;
+          border-bottom-right-radius: 50%;
+          border-bottom-left-radius: 50%;
+      }
+
+      .timeline > li.timeline-inverted > .timeline-panel {
+          float: right;
+      }
+
+      .timeline > li.timeline-inverted > .timeline-panel:before {
+          border-left-width: 0;
+          border-right-width: 15px;
+          left: -15px;
+          right: auto;
+      }
+
+      .timeline > li.timeline-inverted > .timeline-panel:after {
+          border-left-width: 0;
+          border-right-width: 14px;
+          left: -14px;
+          right: auto;
+      }
+
+      .timeline-badge.danger {
+          background-color: #d9534f !important;
+      }
+
+      .timeline-title {
+          margin-top: 0;
+          color: inherit;
+      }
+
+      .timeline-body > p,
+      .timeline-body > ul {
+          margin-bottom: 0;
+      }
+
+      .timeline-body > p + p {
+          margin-top: 5px;
+      }

@@ -1,0 +1,296 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    title Smart-Raid Suivre une équipe
+    meta(http-equiv='Content-Security-Policy', content="script-src 'self' 'unsafe-inline';")
+
+  body
+      style.
+        html, body {
+          height: 100%;
+          margin: 0;
+          letter-spacing: 1px;
+          font-family: "Helvetica Neue";
+        }
+
+        .container {
+          box-sizing: border-box;
+          width: 100%;
+          height: 100%;
+        }
+
+        .row:after {
+          display: table;
+          clear: both;
+          height: 100%;
+        }
+
+        .col-1 {
+          float: left;
+          width: 20%;
+          height: 100%;
+          position: fixed;
+          display: flex;
+        }
+
+        .col-2 {
+          padding-left: 19.9%;
+          float: left;
+          width: 80%;
+          height: 100%;
+        }
+
+        .border-right {
+          height: 100%;
+          border-right: 1px solid #eceeef !important;
+        }
+
+        .btn {
+          font-size: 0.765625rem;
+          text-transform: uppercase;
+          display: inline-block;
+          font-weight: 600;
+          color: #343a40;
+          text-align: center;
+          vertical-align: middle;
+          cursor: pointer;
+          user-select: none;
+          background-color: transparent;
+          border: 0px solid transparent;
+          padding: 0.75rem 1.5rem;
+          -webkit-appearance: button;
+        }
+
+        input[type=text] {
+          display: block;
+          position: fixed;
+          height: 50px;
+          padding-left: 15px;
+          width: 99.6%;
+          font-size: 0.875rem;
+          font-weight: 400;
+          line-height: 1.5;
+          color: #55595c;
+          border: 0px solid #ced4da;
+          background-color: #f7f7f9;
+        }
+
+        ul {
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        .img {
+          max-width: 70%;
+        }
+        li { color: #111; font-family: 'Open Sans', sans-serif; font-size: 15px; font-weight: 30; line-height: 32px; }
+        p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 14px; line-height: 24px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
+        .timeline {
+            list-style: none;
+            padding: 20px 0 20px;
+            position: relative;
+        }
+
+        .timeline:before {
+            top: 0;
+            bottom: 0;
+            position: absolute;
+            content: " ";
+            width: 3px;
+            left: 50%;
+        }
+
+        .timeline > li {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline > li:before,
+        .timeline > li:after {
+            content: " ";
+            display: table;
+        }
+
+        .timeline > li:after {
+            clear: both;
+        }
+
+        .timeline > li:before,
+        .timeline > li:after {
+            content: " ";
+            display: table;
+        }
+
+        .timeline > li:after {
+            clear: both;
+        }
+
+        .timeline > li > .timeline-panel {
+            width: 50%;
+            float: left;
+            border: 1px solid #d4d4d4;
+            border-radius: 2px;
+            padding: 20px;
+            position: relative;
+            -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+        }
+
+        .timeline > li.timeline-inverted + li:not(.timeline-inverted),
+        .timeline > li:not(.timeline-inverted) + li.timeline-inverted {
+            margin-top: -60px;
+        }
+
+        .timeline > li:not(.timeline-inverted) {
+            padding-right: 90px;
+        }
+
+        .timeline > li.timeline-inverted {
+            padding-left: 90px;
+        }
+
+        .timeline > li > .timeline-panel:before {
+            position: absolute;
+            content: " ";
+        }
+
+        .timeline > li > .timeline-panel:after {
+            position: absolute;
+            content: " ";
+        }
+
+        .timeline > li.timeline-inverted > .timeline-panel {
+            float: right;
+        }
+
+        .timeline > li.timeline-inverted > .timeline-panel:before {
+            border-left-width: 0;
+            border-right-width: 15px;
+            left: -15px;
+            right: auto;
+
+        }
+
+        .timeline > li.timeline-inverted > .timeline-panel:after {
+            border-left-width: 0;
+            border-right-width: 14px;
+            left: -14px;
+            right: auto;
+        }
+
+        .timeline-title {
+            margin-top: 0;
+            color: inherit;
+        }
+
+        .timeline-body > p,
+        .timeline-body > ul {
+            margin-bottom: 0;
+        }
+
+        .timeline-body > p + p {
+            margin-top: 5px;
+        }
+
+      .container
+        .row
+          .col-1
+            .border-right
+              #menu(style='margin-top:50px;')
+                button.btn(onclick='request()') 🔎 Recherher
+                button.btn(onclick='project()') ⌅ Le projet
+                button.btn(onclick='github()') 🔩 Github
+                h5(style="text-align: center;") Smart-Raid
+          .col-2
+            div(style='z-index: 99;')
+              input#id-input(type='text', placeholder="ID de l'équipe")
+            div(style='padding-left: 1%; padding-right: 1%; margin-top: 55px;')
+              p#information
+              ul.timeline#messageList
+
+      script.
+        const { ipcRenderer, shell } = require('electron');
+
+        ipcRenderer.on('responce-team', function(event, data) {
+            if(data.error == "id is not number") {
+              document.getElementById('information').innerHTML = "L'id doit etre un nombre";
+            } else {
+              document.getElementById('information').innerHTML = "MAJ : " +
+              new Date().toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+              document.getElementById('messageList').style.display = "block";
+            }
+
+            // sort
+            var list = [];
+            // message
+            if(data.messages.length != 0) {
+                for(var i = 0; i < data.messages.length; i++) {
+                  var message = data.messages[i];
+                  list.push({
+                    date:   message.message_time,
+                    type: "message",
+                    uri: message.contenu
+                  });
+                }
+            }
+            // photo
+            if(data.photos.length != 0) {
+              for(var i = 0; i < data.photos.length; i++) {
+                var photo = data.photos[i];
+                list.push({
+                  date:   photo.photo_date,
+                  type: "photo",
+                  uri: photo.uri
+                });
+              }
+            }
+
+            list.sort(function(a,b){
+               var dateA = new Date(a.date).getTime();
+               var dateB = new Date(b.date).getTime();
+               return dateA > dateB ? 1 : -1;
+            });
+
+            var ulElement = document.getElementById("messageList");
+            for(var i = 0; i < list.length; i++) {
+              var elem = list[i];
+              if(elem.type == "photo") {
+                var li = document.createElement("li");
+                li.className = "list-group-item timeline-inverted";
+                li.innerHTML = "<div class=\"timeline-panel\"> <div class=\"timeline-body\"> " + new Date(Date.parse(elem.date)).toLocaleDateString() + " <img class=\"img-fluid img\" src=" + elem.uri + "></img></div></div>";
+                ulElement.appendChild(li);
+              } else {
+                var li = document.createElement("li");
+                li.className = "list-group-item";
+                li.innerHTML = "<div class=\"timeline-panel\"> <div class=\"timeline-body\">" + new Date(Date.parse(elem.date)).toLocaleDateString() + " " + elem.uri + "</div></div>";
+                ulElement.appendChild(li);
+              }
+            }
+        });
+
+        ipcRenderer.on('responce-has-team', function(event, teamID) {
+          if(teamID != -1) {
+              document.getElementById('id-input').value = teamID;
+          }
+        });
+        ipcRenderer.send('has-team', "");
+
+        function request() {
+            document.getElementById("messageList").innerHTML = "";
+            var id = document.getElementById('id-input').value;
+            var data = {id: id};
+            ipcRenderer.send('request-team', data);
+            //document.getElementById('information').innerHTML = "";
+            console.log("request send");
+        }
+
+        function project() {
+          ipcRenderer.send('request-project', "open");
+        }
+
+        function github() {
+          var shell = require('electron').shell;
+          shell.openExternal("https://github.com/badvalou/Smart-Raid-WEB");
+        }
