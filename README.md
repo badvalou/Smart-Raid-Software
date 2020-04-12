@@ -14,6 +14,7 @@ Cahier des charges : Le but de ce projet et de réaliser un dispositif permettan
 * Utilisation du moteur de modele Pug grace à la dependence electron-pug
 * Stockage des donnes de l'utilisateur dans un fichier user Data (taille et position de la fenêtre, id de l'équipe)
 * Projet basé sur : https://github.com/deskfiler/deskfiler
+* Electron js : https://www.electronjs.org/
 
 ## Contribution
 * IUT de Roanne - RT 2020
